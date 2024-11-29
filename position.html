@@ -10,20 +10,20 @@
     <script>
         THREEx.ArToolkitContext.baseURL = 'https://raw.githack.com/jeromeetienne/ar.js/master/three.js/';
 
-        const targetLatitude = 20.3987866;  // Latitud de destino
-        const targetLongitude = -101.2238166;  // Longitud de destino
+        const targetLatitude = 20.3987665;  // Latitud de destino
+        const targetLongitude = -101.2238308;  // Longitud de destino
 
         function checkUserLocation(position) {
             const userLat = position.coords.latitude;
             const userLon = position.coords.longitude;
 
-            // Imprimir las coordenadas del usuario en la pantalla
+            // Obtenemos las coordenadas del usuario para mostrarlas en pantalla y guiarnos
             document.getElementById('userLocation').innerHTML = `Ubicación del usuario:<br>Latitud: ${userLat}<br>Longitud: ${userLon}`;
 
-            // Calcular distancia entre las coordenadas del usuario y las coordenadas objetivo
+            // Se calculan las coordenadas entre la persona y el objeto
             const distance = Math.sqrt(Math.pow(userLat - targetLatitude, 2) + Math.pow(userLon - targetLongitude, 2));
 
-            // Mostrar el cubo si está cerca (aproximadamente 100 metros)
+            // Mostrar el elemento si se encuentra a menos de 100 metros
             if (distance < 0.01) {  
                 document.getElementById('geoEntity').setAttribute('visible', 'true');
             } else {
@@ -41,21 +41,17 @@
 </head>
 
 <body style='margin: 0; overflow: hidden;'>
-    <!-- Mostrar las coordenadas del usuario en la pantalla -->
+    <!-- Coordenadas del usuario -->
     <div id="userLocation" style="position: fixed; top: 10px; left: 10px; z-index: 10; background-color: rgba(0, 0, 0, 0.7); color: white; padding: 10px; border-radius: 5px;">
         Cargando ubicación...
     </div>
 
-    <a-scene
-        vr-mode-ui="enabled: false"
-        embedded
-        arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
+    <a-scene vr-mode-ui="enabled: false" embedded arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
 
-        <!-- El cubo inicialmente está oculto -->
+       
         <a-entity id="geoEntity" geometry="primitive: box" rotation="0 180 0" scale="0.15 0.15 0.15" 
-                  gps-entity-place="longitude: 20.3987866; latitude: -101.2238166;" visible="false"></a-entity>
+                  gps-entity-place="longitude: 20.3987665; latitude: -101.2238308;" visible="false"></a-entity>
 
-        <!-- Cámara AR -->
         <a-camera gps-camera rotation-reader></a-camera>
     </a-scene>
 </body>
