@@ -10,17 +10,21 @@
     <script>
         THREEx.ArToolkitContext.baseURL = 'https://raw.githack.com/jeromeetienne/ar.js/master/three.js/';
 
-        const targetLatitude = 20.3987727;  // Latitud de destino
-        const targetLongitude = -101.2238552;  // Longitud de destino
+        const targetLatitude = 20.3987866;  // Latitud de destino
+        const targetLongitude = -101.2238166;  // Longitud de destino
 
         function checkUserLocation(position) {
             const userLat = position.coords.latitude;
             const userLon = position.coords.longitude;
 
+            // Imprimir las coordenadas del usuario en la pantalla
+            document.getElementById('userLocation').innerHTML = `Ubicación del usuario:<br>Latitud: ${userLat}<br>Longitud: ${userLon}`;
+
             // Calcular distancia entre las coordenadas del usuario y las coordenadas objetivo
             const distance = Math.sqrt(Math.pow(userLat - targetLatitude, 2) + Math.pow(userLon - targetLongitude, 2));
 
-            if (distance < 0.01) {  // Si está cerca (aproximadamente 100 metros)
+            // Mostrar el cubo si está cerca (aproximadamente 100 metros)
+            if (distance < 0.01) {  
                 document.getElementById('geoEntity').setAttribute('visible', 'true');
             } else {
                 document.getElementById('geoEntity').setAttribute('visible', 'false');
@@ -37,6 +41,11 @@
 </head>
 
 <body style='margin: 0; overflow: hidden;'>
+    <!-- Mostrar las coordenadas del usuario en la pantalla -->
+    <div id="userLocation" style="position: fixed; top: 10px; left: 10px; z-index: 10; background-color: rgba(0, 0, 0, 0.7); color: white; padding: 10px; border-radius: 5px;">
+        Cargando ubicación...
+    </div>
+
     <a-scene
         vr-mode-ui="enabled: false"
         embedded
@@ -44,7 +53,7 @@
 
         <!-- El cubo inicialmente está oculto -->
         <a-entity id="geoEntity" geometry="primitive: box" rotation="0 180 0" scale="0.15 0.15 0.15" 
-                  gps-entity-place="longitude: 20.3987727; latitude: -101.2238552;" visible="false"></a-entity>
+                  gps-entity-place="longitude: 20.3987866; latitude: -101.2238166;" visible="false"></a-entity>
 
         <!-- Cámara AR -->
         <a-camera gps-camera rotation-reader></a-camera>
