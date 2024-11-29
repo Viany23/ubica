@@ -24,7 +24,7 @@
             const distance = Math.sqrt(Math.pow(userLat - targetLatitude, 2) + Math.pow(userLon - targetLongitude, 2));
 
             // Mostrar el elemento si se encuentra a menos de 100 metros
-            if (distance < 0.01) {  
+            if (distance < 0.05) {  
                 document.getElementById('geoEntity').setAttribute('visible', 'true');
             } else {
                 document.getElementById('geoEntity').setAttribute('visible', 'false');
@@ -49,7 +49,7 @@
     <a-scene vr-mode-ui="enabled: false" embedded arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
 
        
-        <a-entity id="geoEntity" geometry="primitive: box" rotation="0 180 0" scale="1 1 1" 
+        <a-entity id="geoEntity" geometry="primitive: box" rotation="0 180 0" scale="3 3 3" 
                   gps-entity-place="longitude:  20.3991602; latitude: -101.2233191;" visible="false"></a-entity>
 
         <a-camera gps-camera rotation-reader></a-camera>
