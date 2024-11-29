@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>GeoAR.js Demo</title>
+    <script src='https://aframe.io/releases/0.9.2/aframe.min.js'></script>
+    <script src="https://raw.githack.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
+    <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+    <script>
+        THREEx.ArToolkitContext.baseURL = 'https://raw.githack.com/jeromeetienne/ar.js/master/three.js/';
+
+        const targetLatitude = 20.3987727;  // Latitud de destino
+        const targetLongitude = -101.2238552;  // Longitud de destino
+
+        function checkUserLocation(position) {
+            const userLat = position.coords.latitude;
+            const userLon = position.coords.longitude;
+
+            // Calcular distancia entre las coordenadas del usuario y las coordenadas objetivo
+            const distance = Math.sqrt(Math.pow(userLat - targetLatitude, 2) + Math.pow(userLon - targetLongitude, 2));
+
+            if (distance < 0.01) {  // Si está cerca (aproximadamente 100 metros)
+                document.getElementById('geoEntity').setAttribute('visible', 'true');
+            } else {
+                document.getElementById('geoEntity').setAttribute('visible', 'false');
+            }
+        }
+
+        // Obtener la ubicación del usuario
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(checkUserLocation);
+        } else {
+            alert("Geolocalización no soportada por este navegador.");
+        }
+    </script>
+</head>
+
+<body style='margin: 0; overflow: hidden;'>
+    <a-scene
+        vr-mode-ui="enabled: false"
+        embedded
+        arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
+
+        <!-- El cubo inicialmente está oculto -->
+        <a-entity id="geoEntity" geometry="primitive: box" rotation="0 180 0" scale="0.15 0.15 0.15" 
+                  gps-entity-place="longitude: 20.3987727; latitude: -101.2238552;" visible="false"></a-entity>
+
+        <!-- Cámara AR -->
+        <a-camera gps-camera rotation-reader></a-camera>
+    </a-scene>
+</body>
+</html>
